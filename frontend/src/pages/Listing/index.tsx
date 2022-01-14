@@ -1,15 +1,22 @@
 import axios from "axios";
 import MovieCard from "components/MovieCard";
 import Pagination from "pages/Pagination";
+import { useEffect } from "react";
+import { useState } from "react";
+import { MoviePage } from "types/movie";
 import { BASE_URL } from "utils/requests";
 
 function Listing() {
-
-//FORMA ERRADA
-axios.get(`${BASE_URL}/movies?size=12&page=0`)
-.then(res => {
-    console.log(res.data)
-})
+    //valor inicial do estado será zero
+    const [pageNumber, setPageNumber] = useState(0);
+    //a função abaixo será executada () sempre que alguma variável [] mude seu valor
+    useEffect(() => {
+        axios.get(`${BASE_URL}/movies?size=12&page=1`)
+            .then(res => {
+                const data = res.data as MoviePage;
+                setPageNumber(data.number);
+            })
+    }, []);
 
     return (
         <>

@@ -22,7 +22,11 @@ function Listing() {
         empty: true
     });
 
-    //a função abaixo será executada () sempre que alguma variável [] mude seu valor
+    const handlePageChange = (newPageNumber: number) => {
+        setPageNumber(newPageNumber);
+    } 
+
+    //a função abaixo será executada () sempre que alguma variável dentro de [] mude seu valor
     useEffect(() => {
         axios.get(`${BASE_URL}/movies?size=12&page=${pageNumber}`)
             .then(res => {
@@ -33,7 +37,7 @@ function Listing() {
 
     return (
         <>
-            <Pagination />
+            <Pagination page={page} onChange={handlePageChange} />
             <div className="container">
                 <div className="row">
                     {page.content.map(item => 
